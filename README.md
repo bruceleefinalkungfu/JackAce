@@ -9,8 +9,13 @@ __________________________
 In JackAce, one can score a total of 25.
 -------------------------
 Jack can be 1 or 11
+
 Queen can be 2 or 12
+
 King can be 3 or 13
+
 Ace can be 4 or 14
+
+____________________________
 
 Jack Ace (11 + 14) = 25. Hence the name
