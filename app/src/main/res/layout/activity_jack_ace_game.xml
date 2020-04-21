@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".JackAceGameActivity">
+    <LinearLayout android:id="@+id/linearLayout1"
+        android:layout_height="fill_parent"
+        android:layout_weight="12"
+        android:layout_alignParentLeft="true"
+        android:layout_width="fill_parent"
+        android:orientation="horizontal">
+
+        <Button
+          android:scaleType="fitCenter"
+            android:id="@+id/row1image1"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:layout_marginVertical="8dip"
+            android:layout_marginHorizontal="8dip"
+            android:layout_gravity="top"></Button>
+        <Button
+          android:scaleType="fitCenter"
+            android:id="@+id/row1image2"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:layout_marginVertical="8dip"
+            android:layout_marginHorizontal="8dip"
+            android:layout_gravity="top"></Button>
+        <Button
+          android:scaleType="fitCenter"
+            android:id="@+id/row1image3"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:layout_marginVertical="8dip"
+            android:layout_marginHorizontal="8dip"
+            android:layout_gravity="top"></Button>
+        <Button
+          android:scaleType="fitCenter"
+            android:id="@+id/row1image4"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:layout_marginVertical="8dip"
+            android:layout_marginHorizontal="8dip"
+            android:layout_gravity="top"></Button>
+        <Button
+          android:scaleType="fitCenter"
+            android:id="@+id/row1image5"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:layout_marginVertical="8dip"
+            android:layout_marginHorizontal="8dip"
+            android:layout_gravity="top"></Button>
+
+    </LinearLayout>
+
+    <LinearLayout android:id="@+id/linearLayout2"
+        android:layout_height="fill_parent"
+        android:layout_weight="12"
+        android:layout_alignParentLeft="true"
+        android:layout_width="fill_parent"
+        android:orientation="horizontal">
+
+        <Button
+          android:scaleType="fitCenter"
+            android:id="@+id/row2image1"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:layout_marginVertical="8dip"
+            android:layout_marginHorizontal="8dip"
+            android:layout_gravity="top"></Button>
+        <Button
+          android:scaleType="fitCenter"
+            android:id="@+id/row2image2"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:layout_marginVertical="8dip"
+            android:layout_marginHorizontal="8dip"
+            android:layout_gravity="top"></Button>
+        <Button
+          android:scaleType="fitCenter"
+            android:id="@+id/row2image3"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:layout_marginVertical="8dip"
+            android:layout_marginHorizontal="8dip"
+            android:layout_gravity="top"></Button>
+        <Button
+          android:scaleType="fitCenter"
+            android:id="@+id/row2image4"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:layout_marginVertical="8dip"
+            android:layout_marginHorizontal="8dip"
+            android:layout_gravity="top"></Button>
+        <Button
+          android:scaleType="fitCenter"
+            android:id="@+id/row2image5"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:layout_marginVertical="8dip"
+            android:layout_marginHorizontal="8dip"
+            android:layout_gravity="top"></Button>
+
+    </LinearLayout>
+
+    <LinearLayout android:id="@+id/linearLayout3"
+        android:layout_height="fill_parent"
+        android:layout_weight="9"
+        android:layout_marginVertical="8dip"
+        android:layout_marginHorizontal="8dip"
+        android:layout_alignParentLeft="true"
+        android:layout_width="fill_parent"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/myScore"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="My Score : 0"/>
+        <TextView
+            android:id="@+id/opponentScore"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Opponent Score : 0"/>
+
+        <Button
+            android:id="@+id/takeCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Need a card" />
+
+        <Button
+            android:id="@+id/dontTakeCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="don't need a card" />
+    </LinearLayout>
+
+    <LinearLayout android:id="@+id/linearLayout4"
+        android:layout_height="fill_parent"
+        android:layout_weight="12"
+        android:layout_alignParentLeft="true"
+        android:layout_width="fill_parent"
+        android:orientation="horizontal">
+
+        <Button
+          android:scaleType="fitCenter"
+            android:id="@+id/row3image1"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:layout_marginVertical="8dip"
+            android:layout_marginHorizontal="8dip"
+            android:layout_gravity="top"></Button>
+        <Button
+          android:scaleType="fitCenter"
+            android:id="@+id/row3image2"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:layout_marginVertical="8dip"
+            android:layout_marginHorizontal="8dip"
+            android:layout_gravity="top"></Button>
+        <Button
+          android:scaleType="fitCenter"
+            android:id="@+id/row3image3"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:layout_marginVertical="8dip"
+            android:layout_marginHorizontal="8dip"
+            android:layout_gravity="top"></Button>
+        <Button
+          android:scaleType="fitCenter"
+            android:id="@+id/row3image4"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:layout_marginVertical="8dip"
+            android:layout_marginHorizontal="8dip"
+            android:layout_gravity="top"></Button>
+        <Button
+          android:scaleType="fitCenter"
+            android:id="@+id/row3image5"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:layout_marginVertical="8dip"
+            android:layout_marginHorizontal="8dip"
+            android:layout_gravity="top"></Button>
+
+    </LinearLayout>
+
+    <LinearLayout android:id="@+id/linearLayout5"
+        android:layout_height="fill_parent"
+        android:layout_weight="12"
+        android:layout_alignParentLeft="true"
+        android:layout_width="fill_parent"
+        android:orientation="horizontal">
+
+        <Button
+          android:scaleType="fitCenter"
+            android:id="@+id/row4image1"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:layout_marginVertical="8dip"
+            android:layout_marginHorizontal="8dip"
+            android:layout_gravity="top"></Button>
+        <Button
+          android:scaleType="fitCenter"
+            android:id="@+id/row4image2"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:layout_marginVertical="8dip"
+            android:layout_marginHorizontal="8dip"
+            android:layout_gravity="top"></Button>
+        <Button
+          android:scaleType="fitCenter"
+            android:id="@+id/row4image3"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:layout_marginVertical="8dip"
+            android:layout_marginHorizontal="8dip"
+            android:layout_gravity="top"></Button>
+        <Button
+          android:scaleType="fitCenter"
+            android:id="@+id/row4image4"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:layout_marginVertical="8dip"
+            android:layout_marginHorizontal="8dip"
+            android:layout_gravity="top"></Button>
+        <Button
+          android:scaleType="fitCenter"
+            android:id="@+id/row4image5"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:layout_marginVertical="8dip"
+            android:layout_marginHorizontal="8dip"
+            android:layout_gravity="top"></Button>
+
+    </LinearLayout>
+
+</LinearLayout>
