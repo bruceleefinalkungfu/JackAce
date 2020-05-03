@@ -34,11 +34,20 @@ public class JackAcePlayer extends CardPlayer {
         }
         //cards.forEach(e -> { cardValues.add(e.getNumber()); totalCount+= e.getNumber(); });
     }
-    
+
+    private int getNumber(Card c, int givenCurrentTotal) {
+        if(givenCurrentTotal + c.getNumber() > 25 && isFaceCard(c))
+            return c.getNumber() - 10;
+        return c.getNumber();
+    }
+
+    public boolean isFaceCard(Card c) {
+        return c.getNumber() > 10;
+    }
+
     public void receiveOneCard(Card c) {
         this.giveMoreCard(c);
-        JackAceCard jackAceCard = (JackAceCard) c;
-        int num = jackAceCard.getNumber(totalCount);
+        int num = getNumber(c, totalCount);
         cardValues.add(num);
         if(totalCount + num > 25) {
             // decrease the first face card's value

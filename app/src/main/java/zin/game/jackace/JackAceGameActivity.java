@@ -15,6 +15,7 @@ import java.io.StringWriter;
 
 import zin.game.card.Card;
 import zin.game.card.jackace.JackAceGame;
+import zin.game.card.jackace.JackAceOnline;
 
 public class JackAceGameActivity extends AppCompatActivity {
 
@@ -61,13 +62,26 @@ public class JackAceGameActivity extends AppCompatActivity {
             dontTakeCard = (Button) findViewById(R.id.dontTakeCard);
             Intent intent = getIntent();
             final String role = intent.getStringExtra("role");
-            JackAceGame.startGameFromTheBeginning(this, role);
-            takeCard.setOnClickListener((view) -> {
-                JackAceGame.requestCard(role);
-            });
-            dontTakeCard.setOnClickListener((v) -> {
-                JackAceGame.endChance(role);
-            });
+            final String server_id = intent.getStringExtra("server_id");
+            if(isItSocketGame(server_id)) {
+                JackAceGame.startGameFromTheBeginning(this, role);
+                takeCard.setOnClickListener((view) -> {
+                    JackAceGame.requestCard(role);
+                });
+                dontTakeCard.setOnClickListener((v) -> {
+                    JackAceGame.endChance(role);
+                });
+            } else {
+                final String client_id = intent.getStringExtra("client_id");
+                JackAceOnline.startGameFromTheBeginning(this, role, server_id, client_id);
+                takeCard.setOnClickListener((view) -> {
+                    JackAceOnline.I_DONT_NEED_IT_ANYMORE_COUNT = 0;
+                    JackAceOnline.requestCard(role);
+                });
+                dontTakeCard.setOnClickListener((v) -> {
+                    JackAceOnline.endChance(role);
+                });
+            }
         } catch(Exception e) {
             Intent intent = new Intent (this, ErrorActivity.class);
             StringWriter sw = new StringWriter();
@@ -77,6 +91,10 @@ public class JackAceGameActivity extends AppCompatActivity {
             intent.putExtra("error", sStackTrace.substring(0, 100));
             startActivity(intent);
         }
+    }
+
+    public boolean isItSocketGame(String s) {
+        return s == null || s.trim().isEmpty();
     }
 
     public static void setImage(boolean shouldSetTop, Card card) {

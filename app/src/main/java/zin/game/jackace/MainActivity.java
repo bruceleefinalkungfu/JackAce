@@ -3,6 +3,8 @@ package zin.game.jackace;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.text.Editable;
 import android.view.View;
@@ -21,6 +23,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        WifiManager wifiMan = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
+        WifiInfo wifiInf = wifiMan.getConnectionInfo();
+        int ipAddress = wifiInf.getIpAddress();
+        String ip = String.format("%d.%d.%d.%d", (ipAddress & 0xff),(ipAddress >> 8 & 0xff),(ipAddress >> 16 & 0xff),(ipAddress >> 24 & 0xff));
         Button joinServerButton = (Button) findViewById(R.id.joinServerButton);
         final EditText enterPortServer = (EditText) findViewById(R.id.enterPortForServerInput);
         final EditText enterIPClient = (EditText) findViewById(R.id.enterIPForClientInput);
@@ -51,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         Button startServerButton = (Button) findViewById(R.id.startServerButton);
+        startServerButton.setText("Start server on "+ ip);
         startServerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

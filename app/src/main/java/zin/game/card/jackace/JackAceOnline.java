@@ -2,24 +2,48 @@ package zin.game.card.jackace;
 
 import java.util.List;
 
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 import zin.game.card.Card;
-import zin.game.card.Deck;
+import zin.game.card.jackace.network.ClientOnline;
+import zin.game.card.jackace.network.ServerOnline;
 import zin.game.jackace.JackAceGameActivity;
-import zin.z.network.ServerClientEvent;
 import zin.z.network.ServerClientEventCallback;
 import zin.z.network.SingleClientForSingleServer;
 import zin.z.network.SingleServerForSingleClient;
 
-import static zin.game.card.jackace.JackAceGameEvent.*;
+import static zin.game.card.jackace.JackAceGameEvent.I_DONT_NEED_CARD_ANYMORE;
+import static zin.game.card.jackace.JackAceGameEvent.I_LOST;
+import static zin.game.card.jackace.JackAceGameEvent.I_NEED_CARD;
 
-public class JackAceGame {
+public class JackAceOnline {
+    public static Retrofit retrofit;
+    static {
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+// set your desired log level
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+// add your other interceptors …
+// add logging as last interceptor
+        httpClient.addInterceptor(logging);  // <-- this is the important line!
+        retrofit = new Retrofit.Builder()
+                .baseUrl("https://zinbotml.000webhostapp.com/")
+                //.baseUrl("http://zinbot.tk/")
+            .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .client(httpClient.build())
+                .build();
+    }
 
     private static JackAcePlayer serverPlayer, clientPlayer;
-    private static SingleClientForSingleServer client = new SingleClientForSingleServer();
-    private static SingleServerForSingleClient server = new SingleServerForSingleClient();
+    private static ServerOnline server = new ServerOnline();
+    private static ClientOnline client = new ClientOnline();
     private static JackAceDeck deck = new JackAceDeck();
     private static JackAceGameActivity activity;
-    private static int I_DONT_NEED_IT_ANYMORE_COUNT = 0;
+    public static int I_DONT_NEED_IT_ANYMORE_COUNT = 0;
 
     public static void declareResultsIfPossible(String role) {
         if(I_DONT_NEED_IT_ANYMORE_COUNT == 2) {
@@ -49,7 +73,7 @@ public class JackAceGame {
     }
 
     public static ServerClientEventCallback serverCallback = new ServerClientEventCallback() {
-        
+
         @Override
         public void onReceiveMessage(String receivedMessage) {
             String[] split = receivedMessage.split(" ");
@@ -75,7 +99,7 @@ public class JackAceGame {
                             break;
                         }
                         default: {
-                            throw new RuntimeException("Impossible exception. Unexpected "+event);
+                            //throw new RuntimeException("Impossible exception. Unexpected "+event);
                         }
                     }
                 } catch (IllegalArgumentException e) {} catch(Exception e) {
@@ -83,7 +107,7 @@ public class JackAceGame {
                 }
             });
         }
-        
+
         @Override
         public void handleOtherEvent(String receivedMessage) {
             String[] split = receivedMessage.split(" ");
@@ -105,17 +129,18 @@ public class JackAceGame {
                     }
                     case I_LOST: {
                         server.sendMessage(I_LOST + "");
+                        JackAceGameActivity.myScore.setText("I Lost!!");
                         disableButtons();
                         break;
                     }
                     default: {
-                        throw new RuntimeException("Impossible exception. Unexpected "+event);
+                        //throw new RuntimeException("Impossible exception. Unexpected "+event);
                     }
                 }
             } catch (IllegalArgumentException e) {}  catch(Exception e) {
                 throw new RuntimeException(e);
             }
-        
+
         }
     };
     public static ServerClientEventCallback clientCallback = new ServerClientEventCallback() {
@@ -143,8 +168,8 @@ public class JackAceGame {
                             I_DONT_NEED_IT_ANYMORE_COUNT = 0;
                             Card c = createCard(split);
                             clientPlayer.receiveOneCard(c);
-                            JackAceGameActivity.opponentScore.setText("Opponent Score : "+ clientPlayer.getTotal());
-                            JackAceGameActivity.setImage(true, c);
+                            JackAceGameActivity.opponentScore.setText("My Score : "+ clientPlayer.getTotal());
+                            JackAceGameActivity.setImage(false, c);
                             break;
                         }
                         case I_DONT_NEED_CARD_ANYMORE: {
@@ -159,7 +184,7 @@ public class JackAceGame {
                             break;
                         }
                         default: {
-                            throw new RuntimeException("Impossible exception. Unexpected "+event);
+                            //throw new RuntimeException("Impossible exception. Unexpected "+event);
                         }
                     }
                 } catch (IllegalArgumentException e) {}  catch(Exception e) {
@@ -167,7 +192,7 @@ public class JackAceGame {
                 }
             });
         }
-        
+
         @Override
         public void handleOtherEvent(String receivedMessage) {
             String[] split = receivedMessage.split(" ");
@@ -183,7 +208,7 @@ public class JackAceGame {
                         break;
                     }
                     default: {
-                        throw new RuntimeException("Impossible exception. Unexpected "+event);
+                        //throw new RuntimeException("Impossible exception. Unexpected "+event);
                     }
                 }
             } catch (IllegalArgumentException e) {}  catch(Exception e) {
@@ -199,7 +224,7 @@ public class JackAceGame {
     private static JackAcePlayer currentPlayer(String role) {
         return role.equals("SERVER") ? serverPlayer : clientPlayer;
     }
-    
+
     public static void startServerPlayerGame () {
         serverPlayer = new JackAcePlayer(serverCallback, "SERVER");
         clientPlayer = new JackAcePlayer(serverCallback, "CLIENT");
@@ -208,34 +233,37 @@ public class JackAceGame {
         List<JackAceCard> clientCard = deck.getNCards(1);
         serverPlayer.receiveOneCard(serverCard.get(0));
         clientPlayer.receiveOneCard(clientCard.get(0));
+        /*
         serverCard = deck.getNCards(1);
         clientCard = deck.getNCards(1);
         serverPlayer.receiveOneCard(serverCard.get(0));
         clientPlayer.receiveOneCard(clientCard.get(0));
+        //*/
     }
     public static void startClientPlayerGame() {
         serverPlayer = new JackAcePlayer(clientCallback, "SERVER");
         clientPlayer = new JackAcePlayer(clientCallback, "CLIENT");
-
         disableButtons();
     }
 
-    public static void startGame(String role) {
+    public static void startGame(String role, String serverId, String clientId) {
         if ((role.equals("SERVER"))) {
-            startServerPlayerGame();
+            startServer(serverId, clientId);
         } else {
-            startClientPlayerGame();
+            joinServer(serverId, clientId);
         }
     }
-    public static void startGameFromTheBeginning(JackAceGameActivity a, String role) {
+    public static void startGameFromTheBeginning(JackAceGameActivity a, String role, String serverId, String clientId) {
         activity = a;
-        startGame(role);
+        startGame(role, serverId, clientId);
     }
-    public static void startServer(int port) {
-        server.startServer(port, serverCallback);
+    public static void startServer(String serverId, String clientId) {
+        server.startServer(serverId, clientId, serverCallback);
+        startServerPlayerGame();
     }
-    public static void joinServer(String ip, int port) {
-        client.connect(ip, port, clientCallback);
+    public static void joinServer(String serverId, String clientId) {
+        client.connect(serverId, clientId, clientCallback);
+        startClientPlayerGame();
     }
     public static void requestCard(String role) {
         Card c = get1Card();
